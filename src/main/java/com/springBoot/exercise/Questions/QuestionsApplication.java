@@ -1,5 +1,6 @@
 package com.springBoot.exercise.Questions;
 
+import com.springBoot.exercise.Questions.configuration.ShopConfiguration;
 import com.springBoot.exercise.Questions.entity.Employee;
 import com.springBoot.exercise.Questions.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;

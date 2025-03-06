@@ -1,4 +1,4 @@
-package com.springBoot.exercise.Questions;
+package com.springBoot.exercise.Questions.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
