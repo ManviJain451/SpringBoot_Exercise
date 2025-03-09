@@ -20,11 +20,13 @@ public class UserService {
         return userRepository.findAll();
     }
 
+//    public List<User> getAllUsersData(){}
+
     public User getUserById(int id) {
         return userRepository.findById(id).orElse(null);
     }
 
-//    @Transactional
+
     public User saveUser(User user) {
         return userRepository.save(user);
 

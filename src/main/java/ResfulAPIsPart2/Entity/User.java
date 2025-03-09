@@ -1,5 +1,6 @@
 package ResfulAPIsPart2.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -20,10 +21,22 @@ public class User {
     @JacksonXmlProperty(localName = "name")
     private String name;
 
-    public User() {}
+    @JsonIgnore
+    private String password;
 
-    public User(String name) {
+    public User() {}
+    public User(String name, String password) {
+
         this.name = name;
+        this.password  = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Integer getId() {

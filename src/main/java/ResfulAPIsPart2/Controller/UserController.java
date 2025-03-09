@@ -22,6 +22,11 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+//    @GetMapping("/users/dynamic-data")
+//    public List<User> getAllUsersData(){
+//        return userService.getAllUsersData();
+//    }
+
     @Operation(summary = "Get User Details", description = "Fetch details of a user using their ID")
     @GetMapping("/{id}")
     public User getUser(@PathVariable int id) {
