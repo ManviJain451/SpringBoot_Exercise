@@ -1,5 +1,6 @@
 package ResfulAPIsPart2.Entity;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
@@ -12,6 +13,7 @@ import jakarta.persistence.*;
 
 @JacksonXmlRootElement(localName = "user")
 @Entity
+@JsonFilter("UserFilter")
 public class User {
 
     @Id
@@ -21,7 +23,7 @@ public class User {
     @JacksonXmlProperty(localName = "name")
     private String name;
 
-    @JsonIgnore
+//    @JsonIgnore
     private String password;
 
     public User() {}

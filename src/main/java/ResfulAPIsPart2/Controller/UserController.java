@@ -2,9 +2,13 @@ package ResfulAPIsPart2.Controller;
 
 import ResfulAPIsPart2.Entity.User;
 import ResfulAPIsPart2.Service.UserService;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,10 +26,17 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-//    @GetMapping("/users/dynamic-data")
-//    public List<User> getAllUsersData(){
-//        return userService.getAllUsersData();
-//    }
+    @PostMapping("/save-dynamic")
+    public MappingJacksonValue saveUserDynamic(@RequestBody User user) {
+        User savedUser = userService.saveUser(user);
+        SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.serializeAllExcept("password");
+        FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", filter);
+
+        MappingJacksonValue mapping = new MappingJacksonValue(savedUser);
+        mapping.setFilters(filters);
+
+        return mapping;
+    }
 
     @Operation(summary = "Get User Details", description = "Fetch details of a user using their ID")
     @GetMapping("/{id}")
