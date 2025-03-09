@@ -6,27 +6,32 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Filter;
+
+import java.io.Serializable;
 
 
 @Table(name = "UsersDetails")
 @Schema(description = "User Entity representing a user in the system")
 
-@JacksonXmlRootElement(localName = "user")
+//@JacksonXmlRootElement(localName = "user")
 @Entity
-@JsonFilter("UserFilter")
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @JacksonXmlProperty(localName = "name")
+//    @JacksonXmlProperty(localName = "name")
     private String name;
 
-//    @JsonIgnore
+    @JsonIgnore
     private String password;
 
     public User() {}
+    public User(String name){
+        this.name = name;
+    }
     public User(String name, String password) {
 
         this.name = name;
