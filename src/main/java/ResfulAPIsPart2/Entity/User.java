@@ -13,7 +13,6 @@ import java.io.Serializable;
 
 @Table(name = "UsersDetails")
 @Schema(description = "User Entity representing a user in the system")
-
 //@JacksonXmlRootElement(localName = "user")
 @Entity
 public class User implements Serializable {
@@ -25,7 +24,7 @@ public class User implements Serializable {
 //    @JacksonXmlProperty(localName = "name")
     private String name;
 
-    @JsonIgnore
+//    @JsonIgnore
     private String password;
 
     public User() {}

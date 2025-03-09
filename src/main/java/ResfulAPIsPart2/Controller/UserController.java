@@ -1,7 +1,7 @@
 package ResfulAPIsPart2.Controller;
 
 import ResfulAPIsPart2.Entity.User;
-import ResfulAPIsPart2.Entity.UserWithPassword;
+import ResfulAPIsPart2.Entity.UserWithoutPassword;
 import ResfulAPIsPart2.Service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,6 +11,9 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
@@ -62,16 +65,70 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @GetMapping(value = "/withID/{id}", produces = "application/vnd.company.app-v1+json")
-    public UserWithPassword getAllUserDetails(@PathVariable int id) {
+//    @GetMapping(value = "/withID/{id}", produces = "application/vnd.company.app-v1+json")
+//    public User getAllUserDetails(@PathVariable int id) {
+//        return userService.getUserById(id);
+//
+//    }
+//
+//    @GetMapping(value = "/withID/{id}", produces = "application/vnd.company.app-v2+json")
+//    public UserWithoutPassword getUserDetails(@PathVariable int id) throws JsonProcessingException {
+//        User user = userService.getUserById(id);
+//        return new UserWithoutPassword(user.getId(), user.getName());
+//
+//    }
+
+//    @GetMapping(value = "/withID/{id}", params = "version=1")
+//    public UserWithoutPassword getAllUserDetails(@PathVariable int id) {
+//        User user = userService.getUserById(id);
+//        return new UserWithoutPassword(user.getId(), user.getName());
+//    }
+//
+//    @GetMapping(value = "/withID/{id}", params = "version=2")
+//    public User getUserDetails(@PathVariable int id) throws JsonProcessingException {
+//        return userService.getUserById(id);
+//
+//    }
+
+    @GetMapping(value = "/withID/v1/{id}")
+    public UserWithoutPassword getAllUserDetails(@PathVariable int id) {
         User user = userService.getUserById(id);
-        return new UserWithPassword(user);
+        return new UserWithoutPassword(user.getId(), user.getName());
     }
 
-    @GetMapping(value = "/withID/{id}", produces = "application/vnd.company.app-v2+json")
+    @GetMapping(value = "/withID/v2/{id}")
     public User getUserDetails(@PathVariable int id) throws JsonProcessingException {
         return userService.getUserById(id);
 
+    }
+
+//    @GetMapping(value = "/withID/{id}", headers = "X-API-VERSION=1")
+//    public UserWithoutPassword getAllUserDetails(@PathVariable int id) {
+//        User user = userService.getUserById(id);
+//        return new UserWithoutPassword(user.getId(), user.getName());
+//    }
+//
+//    @GetMapping(value = "/withID/{id}", headers = "X-API-VERSION=2")
+//    public User getUserDetails(@PathVariable int id) throws JsonProcessingException {
+//        return userService.getUserById(id);
+//
+//    }
+
+
+    @GetMapping("/userWithTopic/{id}")
+    public EntityModel<User> getUserWithTopics(@PathVariable int id) {
+        User user = userService.getUserById(id);
+
+        // Creating a HATEOAS link to fetch all topics
+        Link topicsLink = WebMvcLinkBuilder
+                .linkTo(WebMvcLinkBuilder.methodOn(TopicController.class).getAllTopics())
+                .withRel("all-topics");
+
+        // Wrap the user object inside EntityModel and add the link
+        EntityModel<User> resource = EntityModel.of(user);
+        resource.add(topicsLink);
+
+        return resource;
     }
 
 
