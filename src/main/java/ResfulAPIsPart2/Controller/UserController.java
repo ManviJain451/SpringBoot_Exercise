@@ -45,11 +45,29 @@ public class UserController {
         return mapping;
     }
 
+    @GetMapping("/get-dynamic/{id}")
+    public MappingJacksonValue GetUserDynamic(@PathVariable int id) {
+        User user = userService.getUserById(id);
+        SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.serializeAllExcept("password");
+        FilterProvider filters = new SimpleFilterProvider().addFilter("UserFilter", filter);
+
+        MappingJacksonValue mapping = new MappingJacksonValue(user);
+        mapping.setFilters(filters);
+
+        return mapping;
+    }
 
 
     @Operation(summary = "Save User Details", description = "Save user details in the system")
     @PostMapping("/save")
     public User saveUser(@RequestBody User user) {
+        return userService.saveUser(user);
+    }
+
+
+
+    @PostMapping(value = "/save-xml", produces = {"application/xml", "application/json"}, consumes = {"application/xml", "application/json"})
+    public User saveUserThroughXml(@RequestBody User user) {
         return userService.saveUser(user);
     }
 

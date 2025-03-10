@@ -13,15 +13,16 @@ import java.io.Serializable;
 
 @Table(name = "UsersDetails")
 @Schema(description = "User Entity representing a user in the system")
-//@JacksonXmlRootElement(localName = "user")
+@JacksonXmlRootElement(localName = "user")
 @Entity
+@JsonFilter("UserFilter")
 public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-//    @JacksonXmlProperty(localName = "name")
+    @JacksonXmlProperty(localName = "name")
     private String name;
 
 //    @JsonIgnore
