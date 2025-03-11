@@ -1,8 +1,8 @@
-package RestfulAPIs.Controller;
+package RestfulAPIs.RestfulAPIs.Controller;
 
-import RestfulAPIs.Entity.Employee;
-import RestfulAPIs.Exception.UserNotFoundException;
-import RestfulAPIs.Service.EmployeeService;
+import RestfulAPIs.RestfulAPIs.Entity.Employee;
+import RestfulAPIs.RestfulAPIs.Exception.UserNotFoundException;
+import RestfulAPIs.RestfulAPIs.Service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

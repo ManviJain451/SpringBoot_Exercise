@@ -66,7 +66,7 @@ public class UserController {
 
 
 
-    @PostMapping(value = "/save-xml", produces = {"application/xml", "application/json"}, consumes = {"application/xml", "application/json"})
+    @PostMapping(value = "/save-xml")
     public User saveUserThroughXml(@RequestBody User user) {
         return userService.saveUser(user);
     }
